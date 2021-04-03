@@ -15,12 +15,18 @@ class Bricks():
         self._val=val
         self._ballgrid=[[self._val for i in range (self._count)]for j in range (1)]   
         self.hit=0  
+    
+
+    def clear(self):
+        self._ballgrid=[[" " for i in range (self._count)]for j in range (1)] 
+        #self.print_brick()
 
     def print_brick(self):
         self.collision()
         for i in range(self._count):
                 if self._ballgrid[0][i]=="m" and self._element!= "#":
                     utils.the_screen._grid[self.y_pos][self.x_pos+i]=" "
+                    print(Back.RED+"lite")
                 else:
                     if self._element != "#":      
                         utils.the_screen._grid[self.y_pos][self.x_pos+i]=self._ballgrid[0][i]
@@ -35,8 +41,7 @@ class Bricks():
             if utils.the_ball.get_x() == self.x_pos+i and utils.the_ball.get_y() == self.y_pos:
                 #if already broke or not
                 if self._ballgrid[0][i]!="m": 
-                    #velocity part
-                    
+                    #velocity part 
                     if utils.the_ball.xvel()!=0:
                         _tan = math.atan(utils.the_ball.yvel()/utils.the_ball.xvel())
                         tan_deg=math.degrees(_tan)
@@ -60,6 +65,7 @@ class Bricks():
                                 
                         else:            
                             utils.the_ball.y_vel*=-1  
+
                     if  self._element=="B":
                         #print(Back.RED+"yes")
                         for j in range(self._count):
@@ -109,7 +115,7 @@ class Bricks():
 
 
     def decreasebrick(self,x,y,i,tan_deg):
-       
+        
         if self._element == "#":
             utils.the_screen._grid[y][x]="#"
             self._ballgrid[0][i]="#"
@@ -131,6 +137,7 @@ class Bricks():
                 utils.the_screen.score(1)
                 self._ballgrid[0][i]="m"
                 
+               
             elif self._element == 2 and self._ballgrid[0][i] !="m":
                 self._ballgrid[0][i]-=1
                 if self._ballgrid[0][i]==0:
@@ -162,16 +169,18 @@ class Bricks():
     
 class Bluebricks(Bricks):
 
-    def __init__(self,count,val):
-        super().__init__(val,val,28,10,count)
+    def __init__(self,count,val,xco,yco,level):
+        print(Back.WHITE+"initialised")
+        #self._count=count
+        super().__init__(val,val,xco,yco,count)
 
 class Greenbricks(Bricks):
-    def __init__(self,count,val):
-        super().__init__(val,val,27,8,count)
+    def __init__(self,count,val,xco,yco):
+        super().__init__(val,val,xco,yco,count)
 
 class Redbricks(Bricks):
-    def __init__(self,count,val):
-        super().__init__(val,val,26,6,count)  
+    def __init__(self,count,val,xco,yco):
+        super().__init__(val,val,xco,yco,count)  
 
 class Rockbricks(Bricks):
     def __init__(self,count,x,y,val):
